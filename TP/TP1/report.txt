@@ -1,0 +1,92 @@
+Q1-1 For which reason is it better to run the container with a flag -e to give the environment variables rather than put them directly in the Dockerfile ?
+
+If we place sensitive data like passwords or API keys with ENV is a high security risk. Anyone who gets access to the image can find and steal these data. Using the flag -e does not save these variables in the image and keeps safe.
+
+------------------------------------------------------------------------------------------------
+
+Q1-2 Why do we need a volume to be attached to our postgres container?
+
+
+To persist data safely, we need a volume because it is managed by Docker and exists outside the container's lifecycle. It means that when we update, delete or add in the database, all changes are saved to the volume. If a bug or mistake occur, data is preserved. 
+
+------------------------------------------------------------------------------------------------
+
+Q1-3 Document your database container essentials: commands and Dockerfile.
+
+Dockerfile:
+
+FROM postgres:17.2-alpine
+ENV POSTGRES_DB=db \
+    POSTGRES_USER=usr \
+    POSTGRES_PASSWORD=pwd
+
+Then 
+
+FROM postgres:17.2-alpine
+
+COPY *.sql /docker-entrypoint-initdb.d/
+
+
+Bash:
+
+$ docker build -t igor/databaseimage .
+$ docker network create app-network
+$ docker run \
+    --name igordatabase \
+    --net=app-network \
+    -d \
+    -e POSTGRES_DB=db \
+    -e POSTGRES_USER=usr \
+    -e POSTGRES_PASSWORD=pwd \
+    -v pg-data:/var/lib/postgresql/data \
+    igor/databaseimage
+$ docker run \
+    --name adminer \
+    -p "8090:8080" \
+    --net=app-network \
+    -d \
+    adminer
+
+------------------------------------------------------------------------------------------------
+
+Q1-4 Why do we need a multistage build? And explain each step of this dockerfile.
+
+In the image, we still have elements we do not need or use, so with multistage, we can remove some files or elements (like jdk) to have a smaller, cleaner and lighter image.
+
+
+# Build stage
+FROM eclipse-temurin:21-jdk-alpine AS myapp-build
+#Image with JDK
+
+ENV MYAPP_HOME=/opt/myapp
+#Set an environment variable
+
+WORKDIR $MYAPP_HOME
+#Set an environment variable
+
+RUN apk add --no-cache maven
+#Install maven
+
+COPY pom.xml .
+COPY src ./src
+#Copy these files into the image
+
+RUN mvn package -DskipTests
+#Run maven command to build the project
+
+# Run stage
+FROM eclipse-temurin:21-jre-alpine
+#Image with only JRE, without JDK
+
+ENV MYAPP_HOME=/opt/myapp
+WORKDIR $MYAPP_HOME
+#Same as the previous step
+
+COPY --from=myapp-build $MYAPP_HOME/target/*.jar $MYAPP_HOME/myapp.jar
+#We copy the jar file from the previous stage and we copy it in the new image without jdk
+
+ENTRYPOINT ["java", "-jar", "myapp.jar"]
+#Run the application
+
+
+
