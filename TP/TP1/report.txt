@@ -86,7 +86,6 @@ COPY --from=myapp-build $MYAPP_HOME/target/*.jar $MYAPP_HOME/myapp.jar
 #We copy the jar file from the previous stage and we copy it in the new image without jdk
 
 ENTRYPOINT ["java", "-jar", "myapp.jar"]
-#Run the application
 
 
 
