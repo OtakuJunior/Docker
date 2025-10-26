@@ -25,5 +25,5 @@ jobs:
           cache: maven
      #finally build your app with the latest command
       - name: Build and test with Maven
-        working-directory: ./backend/simpleapi
+        working-directory: ./tp/tp1/backend/simpleapi
         run: mvn clean verify
