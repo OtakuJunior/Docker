@@ -21,6 +21,9 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
+      - name: Check Java version
+        run: java -version
+
      #finally build your app with the latest command
       - name: Build and test with Maven
         working-directory: ./TP/TP1/backend/simpleapi #Directory of pom.xml
