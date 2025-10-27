@@ -28,6 +28,8 @@ jobs:
       - name: Build and test with Maven
         working-directory: ./TP/TP1/backend/simpleapi #Directory of pom.xml
         run: mvn clean verify
+        env:
+          JAVA_HOME: ${{ steps.setup-java.outputs.path }}
 
   #define job to build and publish docker image
   build-and-push-docker-image:
