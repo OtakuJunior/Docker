@@ -47,12 +47,14 @@ jobs:
         # Note: tags has to be all lower-case
         tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-simple-api:latest
 
+    #For database
     - name: Build image and push database
       uses: docker/build-push-action@v6
       with:
         context: ./TP/TP1/database
         tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-database:latest
 
+    #For httpd
     - name: Build image and push httpd
       uses: docker/build-push-action@v6
       with:
