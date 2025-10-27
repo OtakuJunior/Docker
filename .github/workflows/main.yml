@@ -6,9 +6,6 @@ on:
       - master
       - develop
   pull_request:
-    branches:
-      - master
-      - develop
 
 jobs:
   test-backend:
@@ -64,5 +61,7 @@ jobs:
         with:
           context: ./TP/TP1/httpServer
           tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-httpd:latest
-          push: ${{ github.ref == 'refs/heads/master' }}
+
+      - name: Build and test with SonarCloud
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=2fe389055e6df74a1fb2ad3d6702f8c45b8f61e6 -Dsonar.organization=OtakuJunior -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./simple-api/pom.xml
 
