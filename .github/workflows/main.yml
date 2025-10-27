@@ -36,6 +36,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Login to DockerHub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
       - name: Build image and push backend
         uses: docker/build-push-action@v6
         with:
@@ -43,6 +46,7 @@ jobs:
           context: ./TP/TP1/backend/simpleapi
           #Note: tags has to be all lower-case
           tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-simple-api:latest
+          push: ${{ github.ref == 'refs/heads/main' }}
 
       #For database
       - name: Build image and push database
@@ -50,6 +54,7 @@ jobs:
         with:
           context: ./TP/TP1/database
           tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-database:latest
+          push: ${{ github.ref == 'refs/heads/main' }}
 
       #For httpd
       - name: Build image and push httpd
@@ -57,4 +62,5 @@ jobs:
         with:
           context: ./TP/TP1/httpServer
           tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-httpd:latest
+          push: ${{ github.ref == 'refs/heads/main' }}
 
