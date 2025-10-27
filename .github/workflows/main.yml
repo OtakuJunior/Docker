@@ -46,7 +46,7 @@ jobs:
           context: ./TP/TP1/backend/simpleapi
           #Note: tags has to be all lower-case
           tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-simple-api:latest
-          push: ${{ github.ref == 'refs/heads/main' }}
+          push: ${{ github.ref == 'refs/heads/master' }}
 
       #For database
       - name: Build image and push database
@@ -54,7 +54,7 @@ jobs:
         with:
           context: ./TP/TP1/database
           tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-database:latest
-          push: ${{ github.ref == 'refs/heads/main' }}
+          push: ${{ github.ref == 'refs/heads/master' }}
 
       #For httpd
       - name: Build image and push httpd
@@ -62,5 +62,5 @@ jobs:
         with:
           context: ./TP/TP1/httpServer
           tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-httpd:latest
-          push: ${{ github.ref == 'refs/heads/main' }}
+          push: ${{ github.ref == 'refs/heads/master' }}
 
