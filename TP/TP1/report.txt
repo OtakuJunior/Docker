@@ -88,4 +88,15 @@ COPY --from=myapp-build $MYAPP_HOME/target/*.jar $MYAPP_HOME/myapp.jar
 ENTRYPOINT ["java", "-jar", "myapp.jar"]
 
 
+TP Part 2 
+
+2-1 What are testcontainers?
+Test containers permit to run automated testes with docker containers. 
+
+2-2 For what purpose do we need to use secured variables ?
+To hide confidential data
+
+
+
+
 
