@@ -66,5 +66,5 @@ jobs:
           tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-httpd:latest
 
       - name: Build and test with SonarCloud
-        run: mvn -B verify sonar:sonar -Dsonar.projectKey=2fe389055e6df74a1fb2ad3d6702f8c45b8f61e6 -Dsonar.organization=otakujunior -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./TP/TP1/backend/simpleapi/pom.xml
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=OtakuJunior_Docker -Dsonar.organization=OtakuJunior -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file--file ./TP/TP1/backend/simpleapi/pom.xml
 
