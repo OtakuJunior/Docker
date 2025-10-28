@@ -1,0 +1,6 @@
+- name: Run Front
+  docker_container:
+    name: frontend
+    image: otakujr/tp-devops-front
+    networks:
+      - name: backend-proxy-network
