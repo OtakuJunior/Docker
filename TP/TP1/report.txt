@@ -98,5 +98,47 @@ To hide confidential data
 
 
 
+TP part 3
+3-1 Document your inventory and base commands
+
+ansible all -i inventories/setup.yml -m ping 
+igor.guo.takima.cloud | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.11"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+
+ansible all -i inventories/setup.yml -m setup -a "filter=ansible_distribution*"
+igor.guo.takima.cloud | SUCCESS => {
+    "ansible_facts": {
+        "ansible_distribution": "Debian",
+        "ansible_distribution_file_parsed": true,
+        "ansible_distribution_file_path": "/etc/os-release",
+        "ansible_distribution_file_variety": "Debian",
+        "ansible_distribution_major_version": "12",
+        "ansible_distribution_minor_version": "7",
+        "ansible_distribution_release": "bookworm",
+        "ansible_distribution_version": "12.7",
+        "discovered_interpreter_python": "/usr/bin/python3.11"
+    },
+    "changed": false
+}
+
+ansible all -i inventories/setup.yml -m apt -a "name=apache2 state=absent" --become
+igor.guo.takima.cloud | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.11"
+    },
+    "changed": false
+}
+
+ansible-playbook -i inventories/setup.yml playbook.yml
+ok: [igor.guo.takima.cloud]
+
+PLAY RECAP ************************************************************************************************************************************************************
+igor.guo.takima.cloud      : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+
 
 

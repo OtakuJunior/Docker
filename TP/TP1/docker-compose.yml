@@ -32,6 +32,16 @@ services:
     depends_on:
       - backend
 
+  front:
+    build: ./devops-front-main
+    container_name: front-end
+    networks: network-app
+    depends_on:
+      - backend
+      - database
+      - httpd
+
+
 networks:
   network-app:
     driver: bridge
