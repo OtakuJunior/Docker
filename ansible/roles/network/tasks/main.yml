@@ -1,0 +1,7 @@
+  - name: Create backend-db network
+    community.docker.docker_network:
+      name: backend-db-network
+
+  - name: Create backend-proxy network
+    community.docker.docker_network:
+      name: backend-proxy-network

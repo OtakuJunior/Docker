@@ -1,0 +1,13 @@
+- hosts: all
+  gather_facts: true
+  become: true
+  vars_files:
+    - secret.yml
+
+  #Call the role docker to do tasks for installing docker and python
+  roles:
+    - docker
+    - network
+    - database
+    - proxy
+    - app

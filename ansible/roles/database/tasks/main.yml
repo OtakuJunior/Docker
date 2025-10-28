@@ -1,0 +1,12 @@
+- name: Run database
+  docker_container:
+    name: postgres-db
+    image: otakujr/tp-devops-database
+    networks:
+      - name: backend-db-network
+    volumes:
+      - /my/own/datadir:/var/lib/postgresql
+    env:
+      POSTGRES_DB: "{{ POSTGRES_DB }}"
+      POSTGRES_USER: "{{ POSTGRES_USER }}"
+      POSTGRES_PASSWORD: "{{ POSTGRES_PASSWORD }}"

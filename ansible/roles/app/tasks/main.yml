@@ -1,0 +1,12 @@
+- name: Run backend
+  docker_container:
+    name: backend-app
+    image: otakujr/tp-devops-simple-api:latest
+    networks:
+      - name: backend-db-network
+      - name: backend-proxy-network
+
+    env:
+      SPRING_DATASOURCE_URL: "{{ SPRING_DATASOURCE_URL }}"
+      SPRING_DATASOURCE_USERNAME: "{{ SPRING_DATASOURCE_USERNAME }}"
+      SPRING_DATASOURCE_PASSWORD: "{{ SPRING_DATASOURCE_PASSWORD }}"

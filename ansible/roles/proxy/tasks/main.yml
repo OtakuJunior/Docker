@@ -1,0 +1,7 @@
+- name: Run HTTPD
+  docker_container:
+    name: httpd
+    image: otakujr/tp-devops-httpd:latest
+    networks:
+      - name: backend-proxy-network
+    ports: "80:80"
